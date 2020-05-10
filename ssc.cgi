@@ -12,7 +12,7 @@ BEGIN {
    $base_dir = Cwd::realpath(File::Basename::dirname(__FILE__) . '/' . $relative_path);
 }
 # Dependencies ####################################
-# use lib "$base_dir/lib64/perl5";
+use lib "$base_dir/lib64/perl5";
 use CGI qw(:standard);
 use CGI::Carp qw(fatalsToBrowser) ;
 use YAML::XS qw(LoadFile Load);
@@ -310,7 +310,6 @@ sub setBodyMenu {
 	my $self = shift;
 	my @menu = shift;
 
-	use Data::Dumper;
 	my $menu_list = $menu[0];
 
 	if( @menu ) {
