@@ -245,11 +245,11 @@ HEADER
 	  text-align:left;
 	}
 	h1, h2, h3 {
-	  margin:10px;
+	  margin:5px;
 	}
 	section {
 	  # width:90%;
-	  padding: 10px; 
+	  padding: 3px; 
 	  height: auto;
 	  column-count:2;
 	  margin: auto;
@@ -271,11 +271,11 @@ HEADER
 	  	border-radius: 10px;
 		border-color: black;
 		border: solid black;
-		padding: 10px;
+		padding: 3px;
 		overflow: hidden;
 	}
 	dt {
-		padding: 20px;
+		padding: 6px;
 	}
 	dt::before {content: '✓'; margin: 2px;}
    </style>
