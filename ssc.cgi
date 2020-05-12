@@ -313,21 +313,21 @@ sub setBodyMenu {
 
 		foreach my $sec ( @$menu_list ) {
 			print "<dl>";
-			print "<h2 class='h2_box'>$sec->{'box-name'}</h2>";
+			print "<h3 class='h2_box'>$sec->{'box-name'}</h3>";
 
 			if( $sec->{'box-type'} =~ /menu/i ) {
 				my $items = $sec->{'box-items'};
 				if ( scalar @$items ) {
 					foreach my $item ( @$items ) {
 						if ( $item->{'box-type'} =~ /menu/i ) {
-							print "<h3>$item->{'box-name'}</h3>";
+							print "<h4>$item->{'box-name'}</h4>";
 							my $submenu = $item->{'box-items'};
 							if ( scalar @$submenu ) {
 								
 								foreach my $subitem ( @$submenu ) {
 									
 									if ( $subitem->{'box-type'} =~ /menu/i ) {
-										print "<h3>$subitem->{'box-name'}</h3>";
+										print "<h4>$subitem->{'box-name'}</h4>";
 									}
 									elsif( $subitem->{'box-type'} =~ /link/i ) {
 										
