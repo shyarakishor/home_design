@@ -241,48 +241,43 @@ HEADER
      padding-left: .5em;
    }
 
-   	.round_corner {
-	  border-radius: 25px;
-	  background: #73AD21;
+   	h1,h2,h3 {
+	  text-align:left;
+	}
+	h1, h2, h3 {
+	  margin:10px;
+	}
+	section {
+	  # width:90%;
 	  padding: 10px; 
-	  width: 20%;
-	  height: auto;  
-	}
-	.round_corner h3,h4 {
-		color:white;
-	}
-	.round_corner a {
-		color:blue;
-		display: block;
-	}
-	.hyper a:hover {
-		outline: none;
-		text-decoration: none;
-	}
-	a:link {
-  		text-decoration: none;
-  		display: inline-block;
-	}
-	.main_ul {
-	  list-style-type: none;
-	  margin: 0;
-	  
-	  padding-top: 10px;
-	  padding-right: 10px;
-	  padding-bottom: 10px;
-	  padding-left: 10px;
-	  overflow: hidden;
+	  height: auto;
+	  column-count:2;
+	  margin: auto;
 	}
 
-	.body_menu li {
-	  float: left;
-	  margin: 10px;
+	.h2_box {
+		# border-radius: 10px;
+		background: grey;
+		# margin: 10px;
+		border-color: black;
+		border: solid black;
 	}
 
-	.sub_menu {
-		margin: 0;
-	  	overflow: hidden;
+	a {
+	  # text-decoration:none;
+	  color:blue;
 	}
+	dl {
+	  	border-radius: 10px;
+		border-color: black;
+		border: solid black;
+		padding: 10px;
+		overflow: hidden;
+	}
+	dt {
+		padding: 20px;
+	}
+	dt::before {content: '✓'; margin: 2px;}
    </style>
    <script>
 		function getCookie(key) {
@@ -313,58 +308,67 @@ sub setBodyMenu {
 	my $menu_list = $menu[0];
 
 	if( @menu ) {
-		print "<ul class='main_ul body_menu'>";
+		print "<section>";
+
 		foreach my $sec ( @$menu_list ) {
-			
-			if( $sec->{'type'} =~ /menu/i ) {
-				print "<li class='round_corner'>";
-				print "<h3>$sec->{'name'}</h3>";
-				my $items = $sec->{'items'};
+			print "<dl>";
+			print "<h2 class='h2_box'>$sec->{'box-name'}</h2>";
+
+			if( $sec->{'box-type'} =~ /menu/i ) {
+				my $items = $sec->{'box-items'};
 				if ( scalar @$items ) {
-					print "<ul class='sub_menu'>";
 					foreach my $item ( @$items ) {
-						if ( $item->{'type'} =~ /menu/i ) {
-							print "<li><h4>$item->{'name'}</h4></li>";
-							my $submenu = $item->{'items'};
+						if ( $item->{'box-type'} =~ /menu/i ) {
+							print "<h3>$item->{'box-name'}</h3>";
+							my $submenu = $item->{'box-items'};
 							if ( scalar @$submenu ) {
 								
 								foreach my $subitem ( @$submenu ) {
-									print "<ul>";
-									if ( $subitem->{'type'} =~ /menu/i ) {
-										print "<li><h3>$subitem->{'name'}</h3></li>";
+									
+									if ( $subitem->{'box-type'} =~ /menu/i ) {
+										print "<h3>$subitem->{'box-name'}</h3>";
 									}
-									elsif( $subitem->{'type'} =~ /link/i ) {
+									elsif( $subitem->{'box-type'} =~ /link/i ) {
 										
 										if (lc $subitem->{'newwindow'} eq "yes") {
-											print "<li><a href='$subitem->{url}' target='_blank'>$subitem->{name}</a></li>";
+											print "<dt><a href='$subitem->{url}' target='_blank'>$subitem->{'box-name'}</a></dt>";
 										} else {
-											print "<li><a href='$subitem->{url}'>$subitem->{name}</a></li>";
+											print "<dt><a href='$subitem->{url}'>$subitem->{'box-name'}</a></dt>";
 										}
 									}
-									print "</ul>";
 								}
 								
 							}
 						}
-						elsif( $item->{'type'} =~ /link/i ) {
+						elsif( $item->{'box-type'} =~ /link/i ) {
 							
 							if (lc $item->{'newwindow'} eq "yes") {
-								print "<li><a href='$item->{url}' target='_blank'>$item->{name}</a></li>";
+								print "<dt><a href='$item->{url}' target='_blank'>$item->{'box-name'}</a></dt>";
 							} else {
-								print "<li><a href='$item->{url}'>$item->{name}</a></li>";
+								print "<dt><a href='$item->{url}'>$item->{'box-name'}</a></dt>";
 							}
 							
 						}
 					}
-					print "</ul>";
 				}
-				print "</li>";
 			}
-			
+			elsif( $sec->{'box-type'} =~ /link/i ) {
+				my $items = $sec->{'box-items'};
+				if ( scalar @$items ) {
+					foreach my $item ( @$items ) {
+						if (lc $item->{'newwindow'} eq "yes") {
+							print "<dt><a href='$item->{url}' target='_blank'>$item->{'box-name'}</a></dt>";
+						} else {
+							print "<dt><a href='$item->{url}'>$item->{'box-name'}</a></dt>";
+						}
+					}
+				}
+			}
+
+			print "</dl>";
 		}
-		print "</ul>";
+		print "</section>";
 	}
-	
 }
 
 sub displaymenusection {
@@ -534,6 +538,7 @@ my $filedata = YAML::XS::LoadFile($CONFIG_FILE);
 my $header_text = $filedata->{header_title};
 my $fontsizemenu = $filedata->{font_size_menu};
 my @menu = $filedata->{menu};
+my @bodyMenu = $filedata->{'body-menu'};
 my $footer_text = $filedata->{footer};
 #########################################################
 
@@ -541,11 +546,11 @@ my $my_url = $q->url( -relative => 1 );
 my @args = $q->param;
 my $sscapp = SSC->new($my_url);
 
-print $q->header();
+print $q->header(-type => 'text/html', -charset => 'utf-8');
 my $mode = $q->param('mode');
 $sscapp->displayheader($header_text, $fontsizemenu, $mode);
 $sscapp->displaymenusection(@menu);
-$sscapp->setBodyMenu(@menu);
+$sscapp->setBodyMenu(@bodyMenu);
 if ($mode ne "nav") {
 	$sscapp->displayfooter($footer_text);
 }
