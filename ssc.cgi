@@ -266,6 +266,7 @@ HEADER
 	a {
 	  # text-decoration:none;
 	  color:blue;
+	  font-size:12px;
 	}
 	dl {
 	  	border-radius: 10px;
