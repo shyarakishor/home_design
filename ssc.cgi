@@ -241,10 +241,10 @@ HEADER
      padding-left: .5em;
    }
 
-   	h1,h2,h3 {
+   	h1,h2,h3,h4 {
 	  text-align:left;
 	}
-	h1, h2, h3 {
+	h1, h2, h3,h4 {
 	  margin:5px;
 	}
 	section {
