@@ -276,7 +276,7 @@ HEADER
 		overflow: hidden;
 	}
 	dt {
-		padding: 6px;
+		padding: 1px;
 	}
 	dt::before {content: '✓'; margin: 2px;}
    </style>
