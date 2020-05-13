@@ -59,6 +59,8 @@ sub displayheader {
 	my $title = shift;
 	my $menu_font = shift;
     my $mode = shift;
+    my $no_of_box = shift;
+    my $box_font_size = shift;
 
 print <<HEADER;
 <!DOCTYPE html>
@@ -251,7 +253,7 @@ HEADER
 	  # width:90%;
 	  padding: 3px; 
 	  height: auto;
-	  column-count:2;
+	  column-count: $no_of_box;
 	  margin: auto;
 	}
 
@@ -266,7 +268,7 @@ HEADER
 	a {
 	  # text-decoration:none;
 	  color:blue;
-	  font-size:12px;
+	  font-size:$box_font_size;
 	}
 	dl {
 	  	border-radius: 10px;
@@ -541,6 +543,8 @@ my $fontsizemenu = $filedata->{font_size_menu};
 my @menu = $filedata->{menu};
 my @bodyMenu = $filedata->{'body-menu'};
 my $footer_text = $filedata->{footer};
+my $no_of_box = $filedata->{no_of_box};
+my $box_font_size = $filedata->{box_font_size};
 #########################################################
 
 my $my_url = $q->url( -relative => 1 );
@@ -549,7 +553,7 @@ my $sscapp = SSC->new($my_url);
 
 print $q->header(-type => 'text/html', -charset => 'utf-8');
 my $mode = $q->param('mode');
-$sscapp->displayheader($header_text, $fontsizemenu, $mode);
+$sscapp->displayheader($header_text, $fontsizemenu, $mode, $no_of_box, $box_font_size);
 $sscapp->displaymenusection(@menu);
 $sscapp->setBodyMenu(@bodyMenu);
 if ($mode ne "nav") {
