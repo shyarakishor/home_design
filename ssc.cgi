@@ -254,7 +254,7 @@ HEADER
 	  padding: 3px; 
 	  height: auto;
 	  column-count: $no_of_box;
-	  margin: auto;
+	  margin-top: 30px;
 	}
 
 	.h2_box {
