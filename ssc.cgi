@@ -276,6 +276,7 @@ HEADER
 		border: solid black;
 		padding: 3px;
 		overflow: hidden;
+		margin: auto;
 	}
 	dt {
 		padding: 1px;
