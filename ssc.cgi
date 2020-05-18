@@ -265,7 +265,7 @@ HEADER
 		border: solid black;
 	}
 
-	a {
+	section a {
 	  # text-decoration:none;
 	  color:blue;
 	  font-size:$box_font_size;
@@ -276,7 +276,7 @@ HEADER
 		border: solid black;
 		padding: 3px;
 		overflow: hidden;
-		margin: auto;
+		margin-bottom: 3px;
 	}
 	dt {
 		padding: 1px;
@@ -311,11 +311,19 @@ sub setBodyMenu {
 
 	my $menu_list = $menu[0];
 
+	my $is_first = 1;
 	if( @menu ) {
 		print "<section>";
 
 		foreach my $sec ( @$menu_list ) {
-			print "<dl>";
+			if ( $is_first ) {
+				print "<dl style='margin:0px;'>";
+				$is_first = 0;
+			}
+			else {
+				print "<dl>";
+			} 
+			
 			print "<h3 class='h2_box'>$sec->{'box-name'}</h3>";
 
 			if( $sec->{'box-type'} =~ /menu/i ) {
